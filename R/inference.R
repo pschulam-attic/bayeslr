@@ -42,3 +42,24 @@ observe.bayeslr <- function(blr, X, y) {
     blr$w_cov <- w_cov
     blr
 }
+
+#' Predict response for new x
+#'
+#' @export
+#' 
+predict.bayeslr <- function(blr, X) {
+    if (is.vector(X)) {
+        X <- matrix(X, nrow = 1)
+    }
+
+    p <- nrow(X)
+
+    if (p != dim(blr)) {
+        stop("Number of columns (features) in X do not match bayeslr dimension.")
+    }
+
+    y <- X %*% blr$w_mean
+    sigsq <- blr$sigsq + X %*% tcrossprod(blr$w_cov, X)
+
+    list(y = y, sd = sqrt(sigsq))
+}
