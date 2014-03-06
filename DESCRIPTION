@@ -1,6 +1,7 @@
 Package: bayeslr
 Title: Functions for fitting and using Bayesian linear regression models.
-Description:
+Description: 
+Version: 0.1
 Author: Peter Schulam <pschulam@gmail.com>
 Maintainer: Peter Schulam <pschulam@gmail.com>
 License: MIT
