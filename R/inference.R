@@ -4,7 +4,7 @@
 #'
 #' @export
 #' 
-observe <- function(...) UesMethod("observe")
+observe <- function(...) UseMethod("observe")
 
 observe.bayeslr <- function(blr, X, y) {
     stopifnot(is.matrix(X))
@@ -40,7 +40,7 @@ observe.bayeslr <- function(blr, X, y) {
     q1 <- as.double(q1)
     q2 <- crossprod(blr$w_mean, solve(blr$w_cov, blr$w_mean))
     q2 <- as.double(q2)
-    sigsq_b <- blr$sigsq_b + 0.5 * (q1 + as.double(y %*% y) + q2)  # Murphy eq. 7.73
+    sigsq_b <- blr$sigsq_b + 0.5 * (q1 + as.double(crossprod(y)) + q2)  # Murphy eq. 7.73
 
     ## Update bayeslr object.
 
