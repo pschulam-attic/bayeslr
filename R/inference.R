@@ -6,6 +6,15 @@
 #' 
 observe <- function(...) UseMethod("observe")
 
+#' Sample models
+#'
+#' Use current beliefs to sample possible models.
+#'
+#' @export
+#'
+samples <- function(...) UseMethod("samples")
+
+#' @export
 observe.bayeslr <- function(blr, X, y) {
     stopifnot(is.matrix(X))
     stopifnot(is.numeric(y))
@@ -62,4 +71,9 @@ predict.bayeslr <- function(blr, X) {
     sigma <- blr$sigsq + X %*% tcrossprod(blr$w_cov, X)
 
     list(y = y, sd = sqrt(diag(sigma)))
+}
+
+#' @export
+samples.bayeslr <- function(blr, n) {
+    rmvnorm(n, mean = blr$w_mean, sigma = blr$w_cov)
 }
