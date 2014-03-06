@@ -10,23 +10,16 @@
 #'
 #' @export
 #' 
-bayeslr <- function(w_mean, w_cov, sigsq_a, sigsq_b) {
+bayeslr <- function(w_mean, w_cov, sigsq) {
     w_mean <- as.double(w_mean)
     d <- length(w_mean)
     
     w_cov <- to_covmat(w_cov, d)
     
-    sigsq_a <- as.double(sigsq_a)
-    if (length(sigsq_a) != 1) stop("Length of hyperparameter sigsq_a greater than 1.")
-    
-    sigsq_b <- as.double(sigsq_b)
-    if (length(sigsq_b) != 1) stop("Length of hyperparameter sigsq_b greater than 1.")
-    
     obj <- structure(list(), class = "bayeslr")
     obj$w_mean <- w_mean
     obj$w_cov <- w_cov
-    obj$sigsq_a <- sigsq_a
-    obj$sigsq_b <- sigsq_b
+    obj$sigsq <- sigsq
     obj
 }
 
