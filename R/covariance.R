@@ -9,7 +9,13 @@ to_covmat.numeric <- function(x, d) {
         stop("length(x) of diagonal vector not equal to dimension d.")
     }
 
-    ifelse(d == 1, as.matrix(x), diag(x))
+    if (d == 1) {
+        covmat <- as.matrix(x)
+    } else {
+        covmat <- diag(x)
+    }
+
+    covmat
 }
 
 #' Convert matrix to covariance matrix.
