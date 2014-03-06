@@ -25,6 +25,24 @@ bayeslr <- function(w_mean, w_cov, sigsq_a, sigsq_b) {
     obj
 }
 
+#' Print bayeslr object
+#'
+#' @export
+#'
+print.bayeslr <- function(blr) {
+    s <- sprintf("Bayesian Linear Regression Model (dim = %d)\n", dim(blr))
+    cat(s)
+    invisible(blr)
+}
+
+#' Number of coefficients in bayeslr model.
+#'
+#' @export
+#'
+dim.bayeslr <- function(blr) {
+    length(blr$w_mean)
+}
+
 #' Append observations to bayeslr
 #' 
 bayeslr_append_evidence <- function(blr, X, y) {
@@ -42,22 +60,4 @@ bayeslr_append_evidence <- function(blr, X, y) {
 #' 
 bayeslr_has_evidence <- function(blr) {
     (!is.null(blr$X)) & (!is.null(blr$y))
-}
-
-#' Print bayeslr object
-#'
-#' @export
-#'
-print.bayeslr <- function(blr) {
-    s <- sprintf("Bayesian Linear Regression Model (dim = %d)\n", dim(blr))
-    cat(s)
-    invisible(blr)
-}
-
-#' Number of coefficients in bayeslr model.
-#'
-#' @export
-#'
-dim.bayeslr <- function(blr) {
-    length(blr$w_mean)
 }
