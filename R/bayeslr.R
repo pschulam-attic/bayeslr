@@ -48,29 +48,10 @@ dim.bayeslr <- function(blr) {
 #'
 #' @export
 #' 
-plot.bayeslr <- function(blr) {
-    w_mean <- blr$w_mean
-    w_sd <- sqrt(diag(blr$w_cov))
-    
-    density_evals <- vector("list", dim(blr))
-
-    for (ix in seq_along(w_mean)) {
-        wm <- w_mean[ix]
-        ws <- w_sd[ix]
-
-        dfunc <- function(x) dnorm(x, wm, ws)
-        lo <- wm - 5 * ws
-        hi <- wm + 5 * ws
-
-        density_evals[[ix]] <- dense_data_frame(dfunc, lo, hi, 100, param_num = ix)
-    }
-
-    p <- ggplot(do.call(rbind, density_evals))
-    p <- p + geom_line(aes(x, y))
-    p <- p + facet_wrap(~ param_num)
-    p <- p + labs(title = "Coefficient Distributions", x = "w", y = "p(w)")
-    p <- p + theme_bw()
-
-    print(p)
-    invisible(p)
+plot.bayeslr <- function(blr, type = c("coef", "func"), ...) {
+    switch(
+        type[1],
+        coef = bayeslr_plot_coef(blr),
+        func = bayeslr_plot_func(blr, ...)
+        )
 }
