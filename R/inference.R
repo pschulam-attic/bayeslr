@@ -52,14 +52,14 @@ predict.bayeslr <- function(blr, X) {
         X <- matrix(X, nrow = 1)
     }
 
-    p <- nrow(X)
+    p <- ncol(X)
 
     if (p != dim(blr)) {
         stop("Number of columns (features) in X do not match bayeslr dimension.")
     }
 
-    y <- X %*% blr$w_mean
-    sigsq <- blr$sigsq + X %*% tcrossprod(blr$w_cov, X)
+    y <- as.double(X %*% blr$w_mean)
+    sigma <- blr$sigsq + X %*% tcrossprod(blr$w_cov, X)
 
-    list(y = y, sd = sqrt(sigsq))
+    list(y = y, sd = sqrt(diag(sigma)))
 }
