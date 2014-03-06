@@ -1,0 +1,4 @@
+S3method(dim,bayeslr)
+S3method(print,bayeslr)
+export(bayeslr)
+export(observe)
